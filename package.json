@@ -1,0 +1,14 @@
+{
+  "name": "simple-sanity-monorepo",
+  "private": true,
+  "description": "Simple sanity monorepo",
+  "scripts": {
+    "dev": "pnpm run --parallel dev",
+    "build": "pnpm run --parallel build"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "devDependencies": {}
+}
