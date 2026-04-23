@@ -4,7 +4,8 @@
   "description": "Simple sanity monorepo",
   "scripts": {
     "dev": "pnpm run --parallel dev",
-    "build": "pnpm run --parallel build"
+    "build": "pnpm run --parallel build",
+    "typegen": "pnpm --filter sanity-simple-monorepo run typegen"
   },
   "engines": {
     "node": ">=20.0.0",

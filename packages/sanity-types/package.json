@@ -1,0 +1,13 @@
+{
+  "name": "@repo/sanity-types",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/sanity.types.ts",
+  "types": "./src/sanity.types.ts",
+  "exports": {
+    ".": "./src/sanity.types.ts"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.21.0"
+  }
+}
