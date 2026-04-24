@@ -422,20 +422,65 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../../packages/sanity-queries/src/allBlogs.ts
+// Variable: ALL_BLOG_QUERY
+// Query: *[_type == "allBlogsPage"][0]{  _createdAt, _id, afterBlogListSections[0]{    description, title  }, beforeBlogListSections[0]{    "bgImage": bgImage.file.asset->url,    description,    title  }}
+export type ALL_BLOG_QUERY_RESULT = {
+  _createdAt: string;
+  _id: string;
+  afterBlogListSections: {
+    description: string | null;
+    title: string | null;
+  } | null;
+  beforeBlogListSections: {
+    bgImage: null;
+    description: string | null;
+    title: string | null;
+  } | null;
+} | null;
+
 // Source: ../../packages/sanity-queries/src/blog.ts
 // Variable: BLOG_QUERY
-// Query: *[_type == 'blog'][0]{  "author": blogAuthor -> fullName, blogContent, description, title}
-export type BLOG_QUERY_RESULT = {
+// Query: *[_type == 'blog'][]{  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title}
+export type BLOG_QUERY_RESULT = Array<{
+  _id: string;
+  slug: string | null;
+  author: string | null;
+  blogContent: PortableText | null;
+  description: string | null;
+  title: string | null;
+}>;
+
+// Source: ../../packages/sanity-queries/src/blog.ts
+// Variable: SINGLE_BLOG_QUERY
+// Query: *[_type == "blog"  && slug.current == $slug ][0]{  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title}
+export type SINGLE_BLOG_QUERY_RESULT = {
+  _id: string;
+  slug: string | null;
   author: string | null;
   blogContent: PortableText | null;
   description: string | null;
   title: string | null;
 } | null;
 
+// Source: ../../packages/sanity-queries/src/home.ts
+// Variable: HOME_PAGE_QUERY
+// Query: *[_type == "homePage"][0]{  pageSections[0]{    "bgImage": bgImage.file.asset->url,    description,    title  }}
+export type HOME_PAGE_QUERY_RESULT = {
+  pageSections: {
+    bgImage: null;
+    description: string | null;
+    title: string | null;
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == 'blog'][0]{\n  \"author\": blogAuthor -> fullName, blogContent, description, title\n}": BLOG_QUERY_RESULT;
+    '*[_type == "allBlogsPage"][0]{\n  _createdAt, _id, afterBlogListSections[0]{\n    description, title\n  }, beforeBlogListSections[0]{\n    "bgImage": bgImage.file.asset->url,\n    description,\n    title\n  }\n}': ALL_BLOG_QUERY_RESULT;
+    '*[_type == \'blog\'][]{\n  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title\n}': BLOG_QUERY_RESULT;
+    '*[_type == "blog"  && slug.current == $slug ][0]{\n  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title\n}': SINGLE_BLOG_QUERY_RESULT;
+    '*[_type == "homePage"][0]{\n  pageSections[0]{\n    "bgImage": bgImage.file.asset->url,\n    description,\n    title\n  }\n}': HOME_PAGE_QUERY_RESULT;
   }
 }

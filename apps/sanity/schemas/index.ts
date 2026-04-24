@@ -28,6 +28,7 @@ import portableText from "./_root/portable-text/index";
 import imageObject from "./_root/media/image";
 import videoObject from "./_root/media/video";
 import pageSections from "./_root/sections";
+import hero from "./buildable-sections/hero";
 
 /**
  * Keep schemas in the correct category of arrays.
@@ -65,6 +66,7 @@ const hoistedObjects: SchemaTypeDefinition[] = [
   // Page Sections
   faqSection,
   blogCarouselSection,
+  hero
 
 ];
 

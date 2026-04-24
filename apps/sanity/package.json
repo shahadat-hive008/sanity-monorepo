@@ -11,7 +11,7 @@
     "dev": "sanity dev",
     "start": "sanity start",
     "schema:extract": "sanity schema extract --path ./schemas/schema.json",
-    "typegen": "pnpm run schema:extract && sanity typegen generate"
+    "typegen": "sanity typegen generate"
   },
   "keywords": [
     "sanity"
