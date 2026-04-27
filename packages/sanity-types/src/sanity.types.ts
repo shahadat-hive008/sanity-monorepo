@@ -27,11 +27,9 @@ export type BlogCarouselSection = {
   overline?: string;
   title?: string;
   description?: string;
-  items?: Array<
-    {
-      _key: string;
-    } & BlogReference
-  >;
+  items?: Array<{
+    _key: string;
+  } & BlogReference>;
 };
 
 export type FaqSection = {
@@ -47,14 +45,11 @@ export type FaqSection = {
   }>;
 };
 
-export type PageSections = Array<
-  | ({
-      _key: string;
-    } & FaqSection)
-  | ({
-      _key: string;
-    } & BlogCarouselSection)
->;
+export type PageSections = Array<{
+  _key: string;
+} & FaqSection | {
+  _key: string;
+} & BlogCarouselSection>;
 
 export type SanityFileAssetReference = {
   _ref: string;
@@ -114,51 +109,41 @@ export type AllBlogsPageReference = {
   [internalGroqTypeReferenceTo]?: "allBlogsPage";
 };
 
-export type PortableText = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "blockquote";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        addLink?: boolean;
-        openNewTab?: boolean;
-        label?: string;
-        type?: "internal" | "external";
-        href?: string;
-        reference?:
-          | HomePageReference
-          | GeneralPageReference
-          | BlogReference
-          | AllBlogsPageReference;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & ImageObject)
-  | ({
-      _key: string;
-    } & VideoObject)
-  | {
-      embedLink?: string;
-      _type: "iframe";
-      _key: string;
-    }
-  | {
-      title?: string;
-      _type: "contentTableBlock";
-      _key: string;
-    }
->;
+export type PortableText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "blockquote";
+  listItem?: "bullet" | "number";
+  markDefs?: Array<{
+    addLink?: boolean;
+    openNewTab?: boolean;
+    label?: string;
+    type?: "internal" | "external";
+    href?: string;
+    reference?: HomePageReference | GeneralPageReference | BlogReference | AllBlogsPageReference;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  _key: string;
+} & ImageObject | {
+  _key: string;
+} & VideoObject | {
+  embedLink?: string;
+  _type: "iframe";
+  _key: string;
+} | {
+  title?: string;
+  _type: "contentTableBlock";
+  _key: string;
+}>;
 
 export type Footer = {
   _id: string;
@@ -173,11 +158,7 @@ export type Footer = {
     label?: string;
     type?: "internal" | "external";
     href?: string;
-    reference?:
-      | HomePageReference
-      | GeneralPageReference
-      | BlogReference
-      | AllBlogsPageReference;
+    reference?: HomePageReference | GeneralPageReference | BlogReference | AllBlogsPageReference;
     _type: "menuLink";
     _key: string;
   }>;
@@ -196,11 +177,7 @@ export type Header = {
     label?: string;
     type?: "internal" | "external";
     href?: string;
-    reference?:
-      | HomePageReference
-      | GeneralPageReference
-      | BlogReference
-      | AllBlogsPageReference;
+    reference?: HomePageReference | GeneralPageReference | BlogReference | AllBlogsPageReference;
     _type: "menuLink";
     _key: string;
   }>;
@@ -389,38 +366,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes =
-  | BlogReference
-  | BlogCarouselSection
-  | FaqSection
-  | PageSections
-  | SanityFileAssetReference
-  | VideoObject
-  | SanityImageAssetReference
-  | ImageObject
-  | HomePageReference
-  | GeneralPageReference
-  | AllBlogsPageReference
-  | PortableText
-  | Footer
-  | Header
-  | HomePage
-  | GeneralPage
-  | AuthorReference
-  | Blog
-  | AllBlogsPage
-  | SanityImageCrop
-  | SanityImageHotspot
-  | Author
-  | Slug
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityFileAsset
-  | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+export type AllSanitySchemaTypes = BlogReference | BlogCarouselSection | FaqSection | PageSections | SanityFileAssetReference | VideoObject | SanityImageAssetReference | ImageObject | HomePageReference | GeneralPageReference | AllBlogsPageReference | PortableText | Footer | Header | HomePage | GeneralPage | AuthorReference | Blog | AllBlogsPage | SanityImageCrop | SanityImageHotspot | Author | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../../packages/sanity-queries/src/allBlogs.ts
 // Variable: ALL_BLOG_QUERY
@@ -478,9 +424,10 @@ export type HOME_PAGE_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "allBlogsPage"][0]{\n  _createdAt, _id, afterBlogListSections[0]{\n    description, title\n  }, beforeBlogListSections[0]{\n    "bgImage": bgImage.file.asset->url,\n    description,\n    title\n  }\n}': ALL_BLOG_QUERY_RESULT;
-    '*[_type == \'blog\'][]{\n  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title\n}': BLOG_QUERY_RESULT;
-    '*[_type == "blog"  && slug.current == $slug ][0]{\n  _id, "slug" : slug.current, "author": blogAuthor -> fullName, blogContent, description, title\n}': SINGLE_BLOG_QUERY_RESULT;
-    '*[_type == "homePage"][0]{\n  pageSections[0]{\n    "bgImage": bgImage.file.asset->url,\n    description,\n    title\n  }\n}': HOME_PAGE_QUERY_RESULT;
+    "*[_type == \"allBlogsPage\"][0]{\n  _createdAt, _id, afterBlogListSections[0]{\n    description, title\n  }, beforeBlogListSections[0]{\n    \"bgImage\": bgImage.file.asset->url,\n    description,\n    title\n  }\n}": ALL_BLOG_QUERY_RESULT;
+    "*[_type == 'blog'][]{\n  _id, \"slug\" : slug.current, \"author\": blogAuthor -> fullName, blogContent, description, title\n}": BLOG_QUERY_RESULT;
+    "*[_type == \"blog\"  && slug.current == $slug ][0]{\n  _id, \"slug\" : slug.current, \"author\": blogAuthor -> fullName, blogContent, description, title\n}": SINGLE_BLOG_QUERY_RESULT;
+    "*[_type == \"homePage\"][0]{\n  pageSections[0]{\n    \"bgImage\": bgImage.file.asset->url,\n    description,\n    title\n  }\n}": HOME_PAGE_QUERY_RESULT;
   }
 }
+

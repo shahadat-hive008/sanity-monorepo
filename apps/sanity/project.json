@@ -1,0 +1,57 @@
+{
+  "name": "sanity-simple-monorepo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/sanity",
+  "projectType": "application",
+  "targets": {
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sanity dev",
+        "cwd": "apps/sanity"
+      },
+      "continuous": true
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sanity build",
+        "cwd": "apps/sanity"
+      },
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "schema:extract": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sanity schema extract --path ./schemas/schema.json",
+        "cwd": "apps/sanity"
+      },
+      "outputs": [
+        "{projectRoot}/schemas/schema.json"
+      ],
+      "cache": true
+    },
+    "typegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sanity typegen generate",
+        "cwd": "apps/sanity"
+      },
+      "dependsOn": ["schema:extract"],
+      "outputs": [
+        "{workspaceRoot}/packages/sanity-types/src/sanity.types.ts"
+      ],
+      "cache": true
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "sanity deploy",
+        "cwd": "apps/sanity"
+      },
+      "cache": false
+    }
+  }
+}

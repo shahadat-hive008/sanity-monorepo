@@ -1,0 +1,43 @@
+{
+  "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/web",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "options": {
+        "outputPath": "apps/web/.next"
+      },
+      "outputs": [
+        "{projectRoot}/.next",
+        "!{projectRoot}/.next/cache"
+      ],
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+  "executor": "@nx/next:server",
+  "options": {
+    "buildTarget": "web:build",
+    "dev": true,
+    "port": 3000
+  },
+  "continuous": true
+},
+    "start": {
+      "executor": "@nx/next:start",
+      "continuous": true
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "eslint .",
+        "cwd": "apps/web"
+      }
+    }
+  },
+  "implicitDependencies": [
+    "sanity-queries",
+    "sanity-types"
+  ]
+}

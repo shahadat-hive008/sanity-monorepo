@@ -5,7 +5,9 @@
   "main": "package.json",
   "license": "UNLICENSED",
   "scripts": {
+    "predev": "node ../../scripts/check-node-version.mjs",
     "build": "sanity build",
+    "prebuild": "node ../../scripts/check-node-version.mjs",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "dev": "sanity dev",

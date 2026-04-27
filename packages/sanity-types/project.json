@@ -1,0 +1,26 @@
+{
+  "name": "sanity-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sanity-types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/sanity-types/dist",
+        "main": "packages/sanity-types/src/index.ts",
+        "tsConfig": "packages/sanity-types/tsconfig.json"
+      },
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit",
+        "cwd": "packages/sanity-types"
+      }
+    }
+  }
+}

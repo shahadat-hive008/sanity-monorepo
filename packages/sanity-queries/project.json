@@ -1,0 +1,21 @@
+{
+  "name": "sanity-queries",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/sanity-queries/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "packages/sanity-queries/dist",
+        "main": "packages/sanity-queries/src/index.ts",
+        "tsConfig": "packages/sanity-queries/tsconfig.json"
+      },
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "dependsOn": ["^build"]
+    }
+  },
+  "implicitDependencies": ["sanity-types"]
+}

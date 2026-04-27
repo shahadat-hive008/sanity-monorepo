@@ -3,17 +3,23 @@
   "private": true,
   "description": "Simple sanity monorepo",
   "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "typegen": "turbo run typegen --filter=sanity-simple-monorepo"
+    "predev": "node scripts/check-node-version.mjs",
+    "dev": "nx run-many --target=dev --all --parallel",
+    "prebuild": "node scripts/check-node-version.mjs",
+    "build": "nx run-many --target=build --all",
+    "typegen": "nx run sanity-simple-monorepo:typegen",
+    "graph": "nx graph"
   },
   "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0 <10.0.0"
+    "node": "22.x",
+    "pnpm": ">=10.0.0"
   },
   "devDependencies": {
-    "turbo": "^2.9.6"
+    "@nx/js": "latest",
+    "@nx/next": "latest",
+    "nx": "latest"
   },
-  "packageManager": "pnpm@9.0.0"
+  "dependencies": {
+    "tslib": "^2.8.1"
+  }
 }
