@@ -13,6 +13,10 @@ export default defineType({
       title: "Blog Carousel",
       type: "blogCarouselSection",
     },
+    {
+      title: "Hero",
+      type: "heroSection",
+    },
   ],
   options: {
     insertMenu: {

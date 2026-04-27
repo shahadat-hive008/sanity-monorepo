@@ -3,12 +3,17 @@
   "private": true,
   "description": "Simple sanity monorepo",
   "scripts": {
-    "dev": "pnpm run --parallel dev",
-    "build": "pnpm run --parallel build"
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typegen": "turbo run typegen --filter=sanity-simple-monorepo"
   },
   "engines": {
     "node": ">=20.0.0",
-    "pnpm": ">=10.0.0"
+    "pnpm": ">=9.0.0 <10.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "turbo": "^2.9.6"
+  },
+  "packageManager": "pnpm@9.0.0"
 }
